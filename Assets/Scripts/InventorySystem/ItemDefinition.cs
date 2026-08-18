@@ -1,28 +1,25 @@
 using UnityEngine;
 
-public class ItemDefiniton : ScriptableObject
+namespace InventorySystem
 {
-    [CreateAssetMenu(menuName = "Inventory/Item Definition", fileName = "New Item Definition")]
-
+    [CreateAssetMenu(menuName = "Inventory/Item Definition", fileName = "New Item Definiton")]
     public class ItemDefinition : ScriptableObject
     {
-        [SerializeField] 
+        [SerializeField]
         private string _name;
 
-        [SerializeField] 
+        [SerializeField]
         private bool _isStackable;
 
         [SerializeField]
-        private Sprite _inGameSprite; 
+        private Sprite _inGameSprite;
 
         [SerializeField]
         private Sprite _uiSprite;
 
-
         public string Name => _name;
         public bool IsStackable => _isStackable;
         public Sprite InGameSprite => _inGameSprite;
-        public Sprite UISprite => _uiSprite;
-
+        public Sprite UiSprite => _uiSprite;
     }
 }
