@@ -21,9 +21,9 @@ namespace InventorySystem
 
         private void OnDisable()
         {
-            PlayerMovement.Instance.Game.ThrowItem.performed += OnThrowItem;
-            PlayerMovement.Instance.Game.NextItem.performed += OnNextItem;
-            PlayerMovement.Instance.Game.PreviousItem.performed += OnPreviousItem;
+            PlayerMovement.Instance.Game.ThrowItem.performed -= OnThrowItem;
+            PlayerMovement.Instance.Game.NextItem.performed -= OnNextItem;
+            PlayerMovement.Instance.Game.PreviousItem.performed -= OnPreviousItem;
         }
 
         private void OnThrowItem(InputAction.CallbackContext context)
