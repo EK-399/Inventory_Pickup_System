@@ -50,35 +50,78 @@ public class PlayerMovement : MonoBehaviour
     }
 
     //Interact
-    public bool playerInteracting;//Is my key being pressed?
+    public bool playerInteractE;//Is my key being pressed?
     public void Interact(InputAction.CallbackContext context)
     {
         if (context.started)
         {
-            playerInteracting = true;
+            Debug.Log("WE PRESS E!");
+            playerInteractE = true;
         }
         else if (context.canceled)
         {
-            playerInteracting = false;
+            playerInteractE = false;
         }
     }
 
-    public bool playerInteractingTab;//Is my key being pressed?
+    public bool playerInteractTab;//Is my key being pressed?
     public void Pause(InputAction.CallbackContext context)
     {
         if (context.started)
         {       
             Debug.Log("WE PRESS TAB!");
-            playerInteractingTab = true;
+            playerInteractTab = true;
         }
         else if (context.canceled)
         {
-            playerInteractingTab = false;
+            playerInteractTab = false;
         }
     }
 
+    public bool playerInteractF;//Is my key being pressed?
+    public void Throw(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            Debug.Log("WE PRESS F!");
+            playerInteractF = true;
+        }
+        else if (context.canceled)
+        {
+            playerInteractF = false;
+        }
+    }
 
+    public bool playerInteract1;//Is my key being pressed?
+    public void Previous(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            Debug.Log("WE PRESS 1!");
+            playerInteract1 = true;
+        }
+        else if (context.canceled)
+        {
+            playerInteract1 = false;
+        }
+    }
 
+    public bool playerInteract2;//Is my key being pressed?
+
+    public static object Instance { get; internal set; }
+
+    public void Next(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            Debug.Log("WE PRESS 2!");
+            playerInteract2 = true;
+        }
+        else if (context.canceled)
+        {
+            playerInteract2 = false;
+        }
+    }
     //JUMP
     public void Jump(InputAction.CallbackContext context)
     {
