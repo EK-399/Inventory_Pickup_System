@@ -2903,7 +2903,6 @@ GameObject:
   - component: {fileID: 1499818235}
   - component: {fileID: 1499818234}
   - component: {fileID: 1499818240}
-  - component: {fileID: 1499818241}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -3304,18 +3303,6 @@ MonoBehaviour:
   - _state:
       _item: {fileID: 0}
       _numberOfItems: 0
---- !u!114 &1499818241
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1499818233}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a1b787570509404393722858dbd096c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InventoryInputHandler
 --- !u!1 &1519659634
 GameObject:
   m_ObjectHideFlags: 0
