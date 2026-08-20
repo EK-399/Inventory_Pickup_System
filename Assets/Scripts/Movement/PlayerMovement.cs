@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.Universal;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -8,6 +9,14 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody2D rb;
     SpriteRenderer spriteRenderer;
+
+    // Section About Hiding
+    private bool canHide = false;
+    private bool hiding = false;
+
+
+
+
 
     public float moveSpeed = 5;
     public float jumpHeight = 10;
@@ -29,8 +38,35 @@ public class PlayerMovement : MonoBehaviour
 
         Debug.DrawRay(transform.position, Vector2.down * 1, Color.purple);
         isGrounded = Physics2D.Raycast(transform.position, Vector2.down, 1, groundLayer);
+
+        //If I want the Player to Stop Moving When in the Shadow
+        //if (!hiding)
+        //{
+        //    rb.linearVelocity = new Vector2(movementInput, rb.linearVelocity.y);
+        //}
+        //else
+        //{
+        //    rb.linearVelocity = Vector2.zero;
+        //}
     }
-    
+
+    private void Update()
+    {
+        if (canHide == true && Input.GetKey("Shift"))
+        {
+            Debug.Log("WE HIDE!");
+            Physics2D.IgnoreLayerCollision(8, 9, true);
+            spriteRenderer.sortingOrder = 0;
+            hiding = true;
+        }
+        else
+        {
+            Physics2D.IgnoreLayerCollision(8, 9, false);
+            spriteRenderer.sortingOrder = 2;
+            hiding = false;
+        }
+    }
+
     void FlipSprite()
     {
         if(movementInput.x > 0)
@@ -43,6 +79,22 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.name.Equals("HideElement"))
+        {
+            canHide = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.name.Equals("HideElement"))
+        {
+            canHide = false;
+        }
+    }
+
 
     public void Move(InputAction.CallbackContext context)
     {
@@ -50,78 +102,20 @@ public class PlayerMovement : MonoBehaviour
     }
 
     //Interact
-    public bool playerInteractE;//Is my key being pressed?
-    public void Interact(InputAction.CallbackContext context)
+    public bool playerInteractShift;//Is my key being pressed?
+    public void Crouch(InputAction.CallbackContext context)
     {
         if (context.started)
         {
-            Debug.Log("WE PRESS E!");
-            playerInteractE = true;
+            Debug.Log("WE PRESS Shift!");
+            playerInteractShift = true;
         }
         else if (context.canceled)
         {
-            playerInteractE = false;
+            playerInteractShift = false;
         }
     }
 
-    public bool playerInteractTab;//Is my key being pressed?
-    public void Pause(InputAction.CallbackContext context)
-    {
-        if (context.started)
-        {       
-            Debug.Log("WE PRESS TAB!");
-            playerInteractTab = true;
-        }
-        else if (context.canceled)
-        {
-            playerInteractTab = false;
-        }
-    }
-
-    public bool playerInteractF;//Is my key being pressed?
-    public void Throw(InputAction.CallbackContext context)
-    {
-        if (context.started)
-        {
-            Debug.Log("WE PRESS F!");
-            playerInteractF = true;
-        }
-        else if (context.canceled)
-        {
-            playerInteractF = false;
-        }
-    }
-
-    public bool playerInteract1;//Is my key being pressed?
-    public void Previous(InputAction.CallbackContext context)
-    {
-        if (context.started)
-        {
-            Debug.Log("WE PRESS 1!");
-            playerInteract1 = true;
-        }
-        else if (context.canceled)
-        {
-            playerInteract1 = false;
-        }
-    }
-
-    public bool playerInteract2;//Is my key being pressed?
-
-    public static object Instance { get; internal set; }
-
-    public void Next(InputAction.CallbackContext context)
-    {
-        if (context.started)
-        {
-            Debug.Log("WE PRESS 2!");
-            playerInteract2 = true;
-        }
-        else if (context.canceled)
-        {
-            playerInteract2 = false;
-        }
-    }
     //JUMP
     public void Jump(InputAction.CallbackContext context)
     {
