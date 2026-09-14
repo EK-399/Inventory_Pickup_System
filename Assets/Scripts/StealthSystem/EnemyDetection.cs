@@ -23,6 +23,7 @@ public class EnemyDetection : MonoBehaviour
     private Rigidbody2D rb;
     private Animator anim;
     private Transform currentPoint;
+    
 
 
 
@@ -149,6 +150,8 @@ public class EnemyDetection : MonoBehaviour
         Debug.Log("Attack");
         //remove 1 heart from the player
         //knockback player
+        //public int damage = 1;
+    
 
         //go back to patrol.
         transform.position = originalPosition;
