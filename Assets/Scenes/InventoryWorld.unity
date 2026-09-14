@@ -2930,11 +2930,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  playerInteractE: 0
-  playerInteractTab: 0
-  playerInteractF: 0
-  playerInteract1: 0
-  playerInteract2: 0
+  playerInteractShift: 0
 --- !u!114 &1499818235
 MonoBehaviour:
   m_ObjectHideFlags: 0
