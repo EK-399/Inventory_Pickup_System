@@ -14,15 +14,13 @@ public class PlayerMovement : MonoBehaviour
     private bool canHide = false;
     private bool hiding = false;
 
-
-
-
-
     public float moveSpeed = 5;
     public float jumpHeight = 10;
 
     public bool isGrounded;
     public LayerMask groundLayer;
+
+    public bool isHiding;
 
     void Start()
     {
@@ -81,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.name.Equals("HideElement"))
+        if(collision.gameObject.layer == LayerMask.NameToLayer("Items"))
         {
             canHide = true;
         }
@@ -89,9 +87,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.name.Equals("HideElement"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Items"))
         {
             canHide = false;
+            isHiding = false;
         }
     }
 
@@ -108,11 +107,19 @@ public class PlayerMovement : MonoBehaviour
         if (context.started)
         {
             Debug.Log("WE PRESS Shift!");
-            playerInteractShift = true;
+            //playerInteractShift = true;
+
+            if (canHide)
+            {
+                isHiding = true;
+            }
         }
         else if (context.canceled)
         {
-            playerInteractShift = false;
+            //playerInteractShift = false;
+
+            if (isHiding)
+                isHiding = false;
         }
     }
 
