@@ -71,6 +71,7 @@ public class EnemyDetection : MonoBehaviour
         //move back and forth or waypoints
         Debug.Log("Patrol");
 
+
         Debug.DrawRay(transform.position, Vector2.left * 10, Color.red);
 
         //if we're close to the player or can see them
@@ -122,6 +123,7 @@ public class EnemyDetection : MonoBehaviour
 
         //go back to patrol.
         transform.position = originalPosition;
+
         currentEnemyState = EnemyState.Patrolling;
        
     }
