@@ -18,12 +18,22 @@ public class EnemyDetection : MonoBehaviour
     public EnemyState currentEnemyState;
     public LayerMask detectLayers;
 
-    private bool isPlayerDetected = false; // Flag to check if the player is detected
+    public GameObject PointA;
+    public GameObject PointB;
+    private Rigidbody2D rb;
+    private Animator anim;
+    private Transform currentPoint;
+
+
 
     private void Start()
     {
         // Save the enemy's original position
         originalPosition = transform.position;
+        rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+        currentPoint = PointB.transform;
+        anim.SetBool("isRunning", true);
     }
 
     private void Update()
@@ -48,29 +58,48 @@ public class EnemyDetection : MonoBehaviour
         }
     }
 
-    //private void OnTriggerEnter2D(Collider2D other)
-    //{
-    //    if (other.transform == player)
-    //    {
-    //        Debug.Log("Player detected!");
-    //        isPlayerDetected = true;
-    //    }
-    //}
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(PointA.transform.position, 0.5f);
+        Gizmos.DrawWireSphere(PointB.transform.position, 0.5f);
+        Gizmos.DrawLine(PointA.transform.position, PointB.transform.position);
+    }
 
-    //private void OnTriggerExit2D(Collider2D other)
-    //{
-    //    if (other.transform == player)
-    //    {
-    //        Debug.Log("Player escaped!");
-    //        isPlayerDetected = false;
-    //    }
-    //}
+    private void flip()
+    {
+        Vector3 localScale = transform.localScale;
+        localScale.x *= -1;
+        transform.localScale = localScale;
+    }
+
 
     public void Patrol()
     {
-        //move back and forth or waypoints
         Debug.Log("Patrol");
+        //move back and forth or waypoints
 
+        Vector2 point = currentPoint.position - transform.position;
+        if (currentPoint == PointB.transform)
+        {
+            rb.linearVelocity = new Vector2(moveSpeed, 0);
+        }
+        else
+        {
+            rb.linearVelocity = new Vector2(-moveSpeed, 0);
+        }
+
+        if(Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == PointB.transform)
+        {
+            flip();
+            currentPoint = PointA.transform;
+            Debug.Log("Hit PointA");
+        }
+        if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == PointA.transform)
+        {
+            flip();
+            currentPoint = PointB.transform;
+            Debug.Log("Hit PointB");
+        }
 
         Debug.DrawRay(transform.position, Vector2.left * 10, Color.red);
 
@@ -103,13 +132,13 @@ public class EnemyDetection : MonoBehaviour
 
         //check distance to the player
         float distance = Vector2.Distance(transform.position, player.transform.position);
-        if (distance < 2)
+        if (distance < 1)
         {
             //attack
             currentEnemyState = EnemyState.Attacking;
         }
 
-        if (distance > 10)
+        if (distance > 5)
         {
             currentEnemyState = EnemyState.Patrolling;
         }
@@ -137,11 +166,4 @@ public class EnemyDetection : MonoBehaviour
         float step = moveSpeed * Time.deltaTime; // Calculate the distance to move
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
     }
-
-    //private void OnDrawGizmos()
-    //{
-    //    // Visualize the detection radius in the editor
-    //    Gizmos.color = Color.red;
-    //    Gizmos.DrawWireSphere(transform.position, detectionRadius);
-    //}
 }
